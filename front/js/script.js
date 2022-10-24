@@ -1,18 +1,38 @@
 "use strict";
 
-getProduct();
-
-function getProduct (){
-    fetch("http://localhost:3000/api/products")
-        .then(res => res.json())
-        .then((data) => arrayProduct(data));
+// creation description
+function createDescription(sofa) {
+  let productDescription = document.createElement("p");
+  productDescription = sofa.description;
+  console.log(productDescription);
 }
 
-function arrayProduct(canapes) {
-    for (let i = 0; i < canapes.length; i++) {
-        const canapeInfo = canapes[i];
-    }
+//creation titre
+function createTitle(sofa) {
+  let productName = document.createElement("h3");
+  productName = sofa.name;
 }
 
-// création de "a"
+// creation image
+function createImg(sofa) {
+  let productImg = document.createElement("img");
+  productImg.src = sofa.imageUrl;
+  productImg.alt = sofa.altTxt;
+}
 
+function listProducts(allSofas) {
+  let sofa;
+  for (let i = 0; i < allSofas.length; i++) {
+    sofa = allSofas[i];
+    createImg(sofa);
+    createTitle(sofa);
+  }
+}
+
+function getProducts (){
+  fetch("http://localhost:3000/api/products")
+    .then(res => res.json())
+    .then((data) => listProducts(data));
+}
+
+getProducts();
