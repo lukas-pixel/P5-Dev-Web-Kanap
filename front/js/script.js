@@ -49,8 +49,7 @@ function section(sofa) {
   sectionDOM.appendChild(productLink);
 
   //ajout enfant section a parent body
-  let div = document.getElementById("divTest");
-  console.log(div);
+  let div = document.getElementById("limitedWidthDiv");
   div.appendChild(sectionDOM);
 
 }
