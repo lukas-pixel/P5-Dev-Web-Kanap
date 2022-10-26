@@ -18,7 +18,6 @@ function listProducts(allSofas) {
     for (let sofa of allSofas) {
         if(productUrl.has("id") && productUrl.get('id') === sofa._id) {
             var name = productUrl.get('id');
-            console.log(sofa);
             ficheProduct(sofa);
             break;
         } else {
@@ -31,15 +30,12 @@ function listProducts(allSofas) {
 function listColors(colors) {
 
     let productColor = document.getElementById("colors");
-
     for (let i = 0; i < colors.length; i++) {
-
         let color = document.createElement("option");
         color.value = colors[i];
         color.innerText = colors[i];
         productColor.appendChild(color);
     }
-
 }
 
 
@@ -66,6 +62,38 @@ function ficheProduct(sofa) {
 
     //creation option
     listColors(sofa.colors);
+}
+
+function saveProduct() {
+    let inputQuantity = document.getElementById("quantity").value;
+    let colorChoice = document.getElementById("colors").value;
+
+    let str = window.location.href;
+    let url = new URL(str);
+    var productUrl = new URLSearchParams(url.search);
+    let idSofa = '';
+
+    if(productUrl.has("id")) {
+        idSofa = productUrl.get("id");
+    } else {
+        console.log("erreur pas d'id");
+        throw "erreur pas d'id";
+    }
+
+
+    // todo récuperer l'objet sofa + sa couleur + sa quantité
+    let objectProduct = {
+        product_id: idSofa,
+        product_color: colorChoice,
+        product_quantity: inputQuantity,
+    }
+    // todo Enregistrer tout ça en local storage avec une clé unique (?)
+    let productJSON = JSON.stringify(objectProduct);
+    localStorage.setItem("ProductCart", productJSON);
+    // todo récupérer le tout dans le panier et afficher les données
+
+    // todo have fun
+
 }
 
 
