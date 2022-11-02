@@ -80,20 +80,43 @@ function saveProduct() {
         throw "erreur pas d'id";
     }
 
-
-    // todo récuperer l'objet sofa + sa couleur + sa quantité
     let objectProduct = {
         product_id: idSofa,
         product_color: colorChoice,
         product_quantity: inputQuantity,
     }
-    // todo Enregistrer tout ça en local storage avec une clé unique (?)
-    let productJSON = JSON.stringify(objectProduct);
-    localStorage.setItem("ProductCart", productJSON);
-    // todo récupérer le tout dans le panier et afficher les données
 
-    // todo have fun
+    addProduct(objectProduct);
 
 }
+
+
+function addProduct(product) {
+
+
+    if (localStorage.getItem("ProductCart") === null) {
+        localStorage.setItem("ProductCart", "[]");
+    }
+
+    let productcart = localStorage.getItem("ProductCart");
+    productcart = JSON.parse(productcart);
+
+    let existInCart = false;
+    productcart = productcart.map(item => {
+        if (item.product_id === product.product_id && item.product_color === product.product_color) {
+            item.product_quantity = Number(item.product_quantity) + Number(product.product_quantity);
+            existInCart = true;
+        }
+        return item;
+    })
+
+    if(!existInCart) {
+        productcart.push(product);
+    }
+
+    localStorage.setItem("ProductCart", JSON.stringify(productcart));
+
+}
+
 
 
