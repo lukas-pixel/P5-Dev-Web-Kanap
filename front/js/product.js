@@ -83,7 +83,7 @@ function saveProduct() {
     let objectProduct = {
         product_id: idSofa,
         product_color: colorChoice,
-        product_quantity: inputQuantity,
+        product_quantity: Number(inputQuantity),
     }
 
     addProduct(objectProduct);
