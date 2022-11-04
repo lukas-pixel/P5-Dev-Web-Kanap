@@ -13,11 +13,11 @@ function listProducts(allSofas) {
 
     let str = window.location.href;
     let url = new URL(str);
-    var productUrl = new URLSearchParams(url.search);
+    let productUrl = new URLSearchParams(url.search);
 
     for (let sofa of allSofas) {
         if(productUrl.has("id") && productUrl.get('id') === sofa._id) {
-            var name = productUrl.get('id');
+            productUrl.get('id');
             ficheProduct(sofa);
             break;
         } else {
@@ -29,12 +29,12 @@ function listProducts(allSofas) {
 
 function listColors(colors) {
 
-    let productColor = document.getElementById("colors");
+    const selectColor = document.getElementById("colors");
     for (let i = 0; i < colors.length; i++) {
-        let color = document.createElement("option");
-        color.value = colors[i];
-        color.innerText = colors[i];
-        productColor.appendChild(color);
+        const optionColor = document.createElement("option");
+        optionColor.value = colors[i];
+        optionColor.innerText = colors[i];
+        selectColor.appendChild(optionColor);
     }
 }
 
