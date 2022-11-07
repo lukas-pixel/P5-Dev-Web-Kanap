@@ -23,6 +23,7 @@ async function sectionCartItem(){
 sectionCartItem();
 
 function creationDom(item, product) {
+
 //creation p Delete
     let itemDelete = document.createElement("p");
     itemDelete.classList.add("deleteItem");
@@ -31,10 +32,6 @@ function creationDom(item, product) {
     let cartSettings = document.createElement("div");
     cartSettings.classList.add("cart__item__content__settings__delete");
     cartSettings.appendChild(itemDelete);
-
-//action supprimer un article
-    addDeleteItem(itemDelete, cartItem, item, product);
-
 
 //creation input
     let quantityNumber = document.createElement("input");
@@ -52,9 +49,6 @@ function creationDom(item, product) {
     cartQuantity.classList.add("cart__item__content__settings__quantity");
     cartQuantity.appendChild(quantity);
     cartQuantity.appendChild(quantityNumber);
-
-//Action changement quantité
-    addChangeQuantity(quantityNumber, item, product);
 
 //creation div Content Settings + ajout enfant div quantity + div Delete
     let cartSettingsQuantity = document.createElement("div");
@@ -103,6 +97,12 @@ function creationDom(item, product) {
     let sectionItem = document.getElementById("cart__items");
     sectionItem.appendChild(cartItem);
 
+//Action changement quantité
+    addChangeQuantity(quantityNumber, item, product);
+
+//action supprimer un article
+    addDeleteItem(itemDelete, cartItem, item, product);
+
 }
 
 function addChangeQuantity(quantityNumber, item, product) {
@@ -132,3 +132,17 @@ function addDeleteItem(itemDelete, cartItem, item, product) {
         cartItem.remove();
     })
 }
+
+function totalQuantity() {
+    let productTotalQuantity = document.getElementById("totalQuantity");
+    let panierLocalStorage = JSON.parse(localStorage.getItem("ProductCart"));
+
+    for (let panierQuantity in panierLocalStorage) {
+        panierQuantity = 0;
+        productTotalQuantity.innerText = panierQuantity + panierLocalStorage.product_quantity;
+    }
+
+    console.log("marine =>", productTotalQuantity);
+}
+
+totalQuantity();
