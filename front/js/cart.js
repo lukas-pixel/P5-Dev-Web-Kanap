@@ -12,11 +12,21 @@ async function sectionCartItem(){
 
     if (productCart !== null) {
         productCart = JSON.parse(productCart);
+    let numberTotalQuantity = 0;
+    let totalPrice = 0;
 
-        for (let product of productCart) {
-            let item = await getProductById(product.product_id);
-            creationDom(item, product);
+        for (let productOrder of productCart) {
+            let item = await getProductById(productOrder.product_id);
+            numberTotalQuantity += productOrder.product_quantity;
+            totalPrice += (productOrder.product_quantity * item.price);
+            creationDom(item, productOrder);
         }
+
+        let productTotalQuantity = document.getElementById("totalQuantity");
+        productTotalQuantity.innerText = numberTotalQuantity;
+
+        let productTotalPrice = document.getElementById("totalPrice");
+        productTotalPrice.innerText = totalPrice;
     }
 }
 
@@ -133,16 +143,4 @@ function addDeleteItem(itemDelete, cartItem, item, product) {
     })
 }
 
-function totalQuantity() {
-    let productTotalQuantity = document.getElementById("totalQuantity");
-    let panierLocalStorage = JSON.parse(localStorage.getItem("ProductCart"));
 
-    for (let panierQuantity in panierLocalStorage) {
-        panierQuantity = 0;
-        productTotalQuantity.innerText = panierQuantity + panierLocalStorage.product_quantity;
-    }
-
-    console.log("marine =>", productTotalQuantity);
-}
-
-totalQuantity();
