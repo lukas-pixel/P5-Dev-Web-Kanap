@@ -1,12 +1,12 @@
 "use strict";
-
+//-----------------function appel de mon API-------------------------------------------------------------------------------
 async function getProductById (idProduct){
    let res = await fetch("http://localhost:3000/api/products/" + idProduct)
     return res.json();
 }
 
-
-async function sectionCartItem(){
+//------------------function qui appel mon localstorage + calcule de la quantite total et prix total-----------------------
+async function rechargerCart(){
 //si local est null alors il est vide
     let productCart = localStorage.getItem("ProductCart");
 
@@ -19,7 +19,7 @@ async function sectionCartItem(){
             let item = await getProductById(productOrder.product_id);
             numberTotalQuantity += productOrder.product_quantity;
             totalPrice += (productOrder.product_quantity * item.price);
-            creationDom(item, productOrder);
+            addSection(item, productOrder);
         }
 
         let productTotalQuantity = document.getElementById("totalQuantity");
@@ -30,9 +30,11 @@ async function sectionCartItem(){
     }
 }
 
-sectionCartItem();
+//-----------------------------function creation des element html dans le DOM-------------------------------------------
+function addSection(item, product) {
 
-function creationDom(item, product) {
+    let sectionItem = document.getElementById("cart__items");
+    sectionItem.innerHTML = "";
 
 //creation p Delete
     let itemDelete = document.createElement("p");
@@ -104,7 +106,6 @@ function creationDom(item, product) {
     cartItem.appendChild(cartItemContent);
 
     //rattachement a la section existante
-    let sectionItem = document.getElementById("cart__items");
     sectionItem.appendChild(cartItem);
 
 //Action changement quantité
@@ -115,6 +116,7 @@ function creationDom(item, product) {
 
 }
 
+//-------------------------------function pour changer la quantite------------------------------------------------------
 function addChangeQuantity(quantityNumber, item, product) {
     quantityNumber.addEventListener("change", (e) => {
         let panierLocalStorage = JSON.parse(localStorage.getItem("ProductCart"));
@@ -127,9 +129,12 @@ function addChangeQuantity(quantityNumber, item, product) {
         })
 
         localStorage.setItem("ProductCart", JSON.stringify(panierLocalStorage))
+
+        rechargerCart();
     })
 }
 
+//------------------------------function pour supprimer notre element du panier-----------------------------------------
 function addDeleteItem(itemDelete, cartItem, item, product) {
     //Suppression d'un element
     itemDelete.addEventListener("click", () => {
@@ -140,7 +145,65 @@ function addDeleteItem(itemDelete, cartItem, item, product) {
         localStorage.setItem("ProductCart", JSON.stringify(panierLocalStorage));
         alert("Votre article a bien été supprimé");
         cartItem.remove();
+        rechargerCart();
     })
 }
 
+//-----------------function pour refresh notre page pour mettre a jour notre quantite total et notre prix total--------------------------------
+
+
+//-----------------CREATION DU FORMULAIRE---------------------------------------------------------------------------------------------------------------------
+//--------------------------recuperation des element html---------------------------------------------------------------
+let formCart = document.getElementsByClassName("cart__order__form");
+let firstNameForm = document.getElementById("firstName");
+let lastNameForm = document.getElementById("lastName");
+let addressForm = document.getElementById("address");
+let cityForm = document.getElementById("city");
+let emailForm = document.getElementById("email");
+
+
+//-----------------------Creation des RegExp----------------------------------------------------------------------------
+let regularRegExp = new  RegExp("^[a-zA-Z ,.'-]+$");
+let addressRegExp = new RegExp("^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+");
+let emailRegExp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i);
+
+//--------------------function fisrtName---------------------------------
+function valueFirstName() {
+    let firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
+
+    if (regularRegExp.test(firstNameForm.value)) {
+        firstNameErrorMsg.innerHTML = '';
+        return true
+    } else {
+        firstNameErrorMsg.innerHTML = 'Veuillez renseigner votre prénom.';
+        return false
+    }
+}
+
+//--------------------function lastName-----------------------------------
+function valueLastName() {
+    let lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
+
+    if(regularRegExp.test(lastNameForm.value)) {
+        lastNameErrorMsg.innerHTML = '';
+        return true
+    } else {
+        lastNameErrorMsg.innerHTML = 'Veuillez renseigner votre nom.';
+        return false
+    }
+}
+
+//--------------------function address--------------------------------------
+function valueAddress() {
+    let addressErrorMsg = document.getElementById("addressErrorMsg");
+
+    if(regularRegExp.test(addressForm.value)) {
+        addressErrorMsg.innerHTML = '';
+        return true
+    } else {
+        addressErrorMsg.innerHTML = 'Veuillez renseigner une adresse postale valide.';
+        return false
+    }
+}
+rechargerCart();
 
