@@ -46,7 +46,7 @@
       <div class="limitedWidthBlock">
         <section class="item">
           <article>
-            <div class="item__img">
+            <div id="item__img" class="item__img">
               <!-- <img src="../images/logo.png" alt="Photographie d'un canapé"> -->
             </div>
             <div class="item__content">
@@ -73,12 +73,12 @@
 
                 <div class="item__content__settings__quantity">
                   <label for="itemQuantity">Nombre d'article(s) (1-100) :</label>
-                  <input type="number" name="itemQuantity" min="1" max="100" value="0" id="quantity">
+                  <input id="quantity" type="number" name="itemQuantity" min="1" max="100" value="0">
                 </div>
               </div>
 
               <div class="item__content__addButton">
-                <button id="addToCart">Ajouter au panier</button>
+                <button id="addToCart" onclick="saveProduct()">Ajouter au panier</button>
               </div>
 
             </div>
