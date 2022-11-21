@@ -10,16 +10,21 @@ async function rechargerCart(){
 //si local est null alors il est vide
     let productCart = localStorage.getItem("ProductCart");
 
+//on vide la section avant de bouclé sur notre DOM
+    let sectionItem = document.getElementById("cart__items");
+    sectionItem.innerHTML = "";
+
     if (productCart !== null) {
         productCart = JSON.parse(productCart);
     let numberTotalQuantity = 0;
     let totalPrice = 0;
 
+
         for (let productOrder of productCart) {
             let item = await getProductById(productOrder.product_id);
             numberTotalQuantity += productOrder.product_quantity;
             totalPrice += (productOrder.product_quantity * item.price);
-            addSection(item, productOrder);
+            addArticle(item, productOrder);
         }
 
         let productTotalQuantity = document.getElementById("totalQuantity");
@@ -31,19 +36,16 @@ async function rechargerCart(){
 }
 
 //-----------------------------function creation des element html dans le DOM-------------------------------------------
-function addSection(item, product) {
-
-    let sectionItem = document.getElementById("cart__items");
-    sectionItem.innerHTML = "";
+function addArticle(item, product) {
 
 //creation p Delete
     let itemDelete = document.createElement("p");
     itemDelete.classList.add("deleteItem");
     itemDelete.innerText = "Supprimer";
 // creation div delete + ajout de l'enfant p delete
-    let cartSettings = document.createElement("div");
-    cartSettings.classList.add("cart__item__content__settings__delete");
-    cartSettings.appendChild(itemDelete);
+    let cartSetting = document.createElement("div");
+    cartSetting.classList.add("cart__item__content__settings__delete");
+    cartSetting.appendChild(itemDelete);
 
 //creation input
     let quantityNumber = document.createElement("input");
@@ -65,7 +67,7 @@ function addSection(item, product) {
 //creation div Content Settings + ajout enfant div quantity + div Delete
     let cartSettingsQuantity = document.createElement("div");
     cartSettingsQuantity.classList.add("cart__item__content__settings");
-    cartSettingsQuantity.appendChild(cartSettings);
+    cartSettingsQuantity.appendChild(cartSetting);
     cartSettingsQuantity.appendChild(cartQuantity);
 
 //creation p price de div Content description
@@ -106,6 +108,7 @@ function addSection(item, product) {
     cartItem.appendChild(cartItemContent);
 
     //rattachement a la section existante
+    let sectionItem = document.getElementById("cart__items");
     sectionItem.appendChild(cartItem);
 
 //Action changement quantité
@@ -148,9 +151,6 @@ function addDeleteItem(itemDelete, cartItem, item, product) {
         rechargerCart();
     })
 }
-
-//-----------------function pour refresh notre page pour mettre à jour notre quantity total et notre prix total--------------------------------
-
 
 //-----------------CREATION DU FORMULAIRE---------------------------------------------------------------------------------------------------------------------
 //--------------------------recuperation des element html---------------------------------------------------------------
