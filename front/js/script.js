@@ -48,9 +48,13 @@ function section(sofa) {
   sectionDOM.classList.add("items");
   sectionDOM.appendChild(productLink);
 
+  //div pour row les items
+  let gridItems = document.getElementById("gridItems");
+  gridItems.appendChild(sectionDOM);
+
   //ajout enfant section a parent body
-  let div = document.getElementById("limitedWidthDiv");
-  div.appendChild(sectionDOM);
+  let items = document.getElementById("limitedWidthDiv");
+  items.appendChild(gridItems);
 
 }
 

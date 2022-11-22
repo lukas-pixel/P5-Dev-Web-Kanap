@@ -115,6 +115,7 @@ function saveProduct() {
         product_quantity: Number(inputQuantity),
     }
 
+    alert("Votre Article a bien été ajouté.");
     addProduct(objectProduct);
 
 }
