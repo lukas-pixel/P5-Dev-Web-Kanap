@@ -1,11 +1,11 @@
 "use strict";
-//-----------------function appel de mon API-------------------------------------------------------------------------------
+//---------------------------------function appel de mon API------------------------------------------------------------
 async function getProductById (idProduct){
    let res = await fetch("http://localhost:3000/api/products/" + idProduct)
     return res.json();
 }
 
-//------------------function qui appel mon localstorage + calcule de la quantity total et prix total-----------------------
+//------------------function qui appel mon localstorage + calcule de la quantity total et prix total--------------------
 async function rechargerCart(){
 //si local est null alors il est vide
     let productCart = localStorage.getItem("ProductCart");
@@ -13,7 +13,7 @@ async function rechargerCart(){
 //on vide la section avant de bouclé sur notre DOM
     let sectionItem = document.getElementById("cart__items");
     sectionItem.innerHTML = "";
-
+//si local est null alors il est vide
     if (productCart !== null) {
         productCart = JSON.parse(productCart);
     let numberTotalQuantity = 0;

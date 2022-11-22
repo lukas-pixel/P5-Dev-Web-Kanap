@@ -1,14 +1,13 @@
 "use strict";
 
-
+//---------------------------------function appel de mon API------------------------------------------------------------
 function getProducts() {
     fetch("http://localhost:3000/api/products")
         .then(res => res.json())
         .then((data) => listProducts(data));
 }
 
-getProducts();
-
+//-------------function pour recupere l'id du produit et afficher ses information dans notre tableau de canapé----------
 function listProducts(allSofas) {
 
     let str = window.location.href;
@@ -27,6 +26,7 @@ function listProducts(allSofas) {
 
 }
 
+//---------------------function pour parcourir notre tableau pour les couleurs est les affichés-------------------------
 function listColors(colors) {
 
     const selectColor = document.getElementById("colors");
@@ -38,7 +38,7 @@ function listColors(colors) {
     }
 }
 
-
+//---------------------------------function creation des element html dans le DOM---------------------------------------
 function ficheProduct(sofa) {
     //creation de img
     let productImg = document.createElement("img");
@@ -64,33 +64,7 @@ function ficheProduct(sofa) {
     listColors(sofa.colors);
 }
 
-function saveProduct() {
-    let inputQuantity = document.getElementById("quantity").value;
-    let colorChoice = document.getElementById("colors").value;
-
-    let str = window.location.href;
-    let url = new URL(str);
-    var productUrl = new URLSearchParams(url.search);
-    let idSofa = '';
-
-    if(productUrl.has("id")) {
-        idSofa = productUrl.get("id");
-    } else {
-        console.log("erreur pas d'id");
-        throw "erreur pas d'id";
-    }
-
-    let objectProduct = {
-        product_id: idSofa,
-        product_color: colorChoice,
-        product_quantity: Number(inputQuantity),
-    }
-
-    addProduct(objectProduct);
-
-}
-
-
+//---------------------------function pour rajouter nos produits dans le localStorage-----------------------------------
 function addProduct(product) {
 
 
@@ -118,5 +92,33 @@ function addProduct(product) {
 
 }
 
+//----------------------------function sauvegarder les produits dans notre localStorage---------------------------------
+function saveProduct() {
+    let inputQuantity = document.getElementById("quantity").value;
+    let colorChoice = document.getElementById("colors").value;
+
+    let str = window.location.href;
+    let url = new URL(str);
+    var productUrl = new URLSearchParams(url.search);
+    let idSofa = '';
+
+    if(productUrl.has("id")) {
+        idSofa = productUrl.get("id");
+    } else {
+        console.log("erreur pas d'id");
+        throw "erreur pas d'id";
+    }
+
+    let objectProduct = {
+        product_id: idSofa,
+        product_color: colorChoice,
+        product_quantity: Number(inputQuantity),
+    }
+
+    addProduct(objectProduct);
+
+}
+
+getProducts();
 
 
