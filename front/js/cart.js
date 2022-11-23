@@ -35,17 +35,41 @@ async function rechargerCart(){
     }
 }
 
+//----------------------- function pour mise en forme des paragraphe et h2 ---------------------------------------------
+
+function simpleForm(param,text) {
+    let item = document.createElement(param);
+    item.innerText = text;
+
+    return item;
+}
+
+//----------------------------function pour mise en forme div ----------------------------------------------------------
+
+function parentChildClassForm(param, nameClass, child, child2, child3) {
+    let divItem = document.createElement(param);
+    divItem.classList.add(nameClass);
+    divItem.appendChild(child);
+
+    if(child2 !== undefined && child2 !== "") {
+        divItem.appendChild(child2);
+    }
+
+    if (child3 !== undefined && child3 !== "") {
+        divItem.appendChild(child3);
+    }
+
+    return divItem;
+}
+
+
 //-----------------------------function creation des element html dans le DOM-------------------------------------------
 function addArticle(item, product) {
 
 //creation p Delete
-    let itemDelete = document.createElement("p");
-    itemDelete.classList.add("deleteItem");
-    itemDelete.innerText = "Supprimer";
+    let itemDelete = simpleForm("p","Supprimer");
 // creation div delete + ajout de l'enfant p delete
-    let cartSetting = document.createElement("div");
-    cartSetting.classList.add("cart__item__content__settings__delete");
-    cartSetting.appendChild(itemDelete);
+    let cartSetting = parentChildClassForm("div","cart__item__content__settings__delete", itemDelete)
 
 //creation input
     let quantityNumber = document.createElement("input");
@@ -56,56 +80,34 @@ function addArticle(item, product) {
     quantityNumber.max = "100";
     quantityNumber.value = product.product_quantity;
 // creation p quantity
-    let quantityText = document.createElement("p");
-    quantityText.innerText = "Qté : ";
+    let quantityText = simpleForm("p","Qté : ");
 //creation div quantity + ajout enfant input + p quantity
-    let cartQuantity = document.createElement("div");
-    cartQuantity.classList.add("cart__item__content__settings__quantity");
-    cartQuantity.appendChild(quantityText);
-    cartQuantity.appendChild(quantityNumber);
+    let cartQuantity = parentChildClassForm("div","cart__item__content__settings__quantity", quantityText, quantityNumber);
 
 //creation div Content Settings + ajout enfant div quantity + div Delete
-    let cartSettingsQuantity = document.createElement("div");
-    cartSettingsQuantity.classList.add("cart__item__content__settings");
-    cartSettingsQuantity.appendChild(cartSetting);
-    cartSettingsQuantity.appendChild(cartQuantity);
+    let cartSettingsQuantity = parentChildClassForm("div", "cart__item__content__settings", cartSetting, cartQuantity);
 
 //creation p price de div Content description
-    let cartPrice = document.createElement("p");
-    cartPrice.innerText = item.price + " €";
+    let cartPrice = simpleForm("p",item.price + " €");
 //creation p color de div content description
-    let cartColor = document.createElement("p");
-    cartColor.innerText = product.product_color;
+    let cartColor = simpleForm("p", product.product_color);
 //creation h2
-    let cartName = document.createElement("h2");
-    cartName.innerText = item.name;
+    let cartName = simpleForm("h2", item.name);
 //creation div description + ajouts enfants
-    let cartContentDescription = document.createElement("div");
-    cartContentDescription.classList.add("cart__item__content__description");
-    cartContentDescription.appendChild(cartName);
-    cartContentDescription.appendChild(cartColor);
-    cartContentDescription.appendChild(cartPrice);
+    let cartContentDescription = parentChildClassForm("div","cart__item__content__description", cartName, cartColor, cartPrice);
     
 //creation cartItemContent + ajouts enfants
-    let cartItemContent = document.createElement("div");
-    cartItemContent.classList.add("cart__item__content");
-    cartItemContent.appendChild(cartContentDescription);
-    cartItemContent.appendChild(cartSettingsQuantity);
+    let cartItemContent = parentChildClassForm("div","cart__item__content", cartContentDescription, cartSettingsQuantity);
 
 //creation img
     let imgItem = document.createElement("img");
     imgItem.src = item.imageUrl;
     imgItem.alt = item.altTxt;
 //Creation cartImg + ajouts enfants
-    let cartImg = document.createElement("div");
-    cartImg.classList.add("cart__item__img");
-    cartImg.appendChild(imgItem);
+    let cartImg = parentChildClassForm("div","cart__item__img", imgItem);
 
 //creation article + ajouts enfants
-    let cartItem = document.createElement("article");
-    cartItem.classList.add("cart__item");
-    cartItem.appendChild(cartImg);
-    cartItem.appendChild(cartItemContent);
+    let cartItem = parentChildClassForm("article", "cart__item", cartImg, cartItemContent);
 
     //rattachement a la section existante
     let sectionItem = document.getElementById("cart__items");
@@ -116,7 +118,6 @@ function addArticle(item, product) {
 
 //action supprimer un article
     addDeleteItem(itemDelete, cartItem, item, product);
-
 }
 
 //-------------------------------function pour changer la quantity------------------------------------------------------
