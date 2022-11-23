@@ -1,13 +1,12 @@
 "use strict";
-
+//-----------------------------Fonction qui fait appel a mon API--------------------------------------------------------
 function getProducts (){
   fetch("http://localhost:3000/api/products")
       .then(res => res.json())
       .then((data) => listProducts(data));
 }
 
-getProducts();
-
+//-----------------------------Fonction pour parcourir le tableau de mes canapés----------------------------------------
 function listProducts(allSofas) {
   let sofa;
   for (let i = 0; i < allSofas.length; i++) {
@@ -16,6 +15,7 @@ function listProducts(allSofas) {
   }
 }
 
+//-----------------------------function creation des element html dans le DOM-------------------------------------------
 function section(sofa) {
 
   //creation de h3
@@ -48,12 +48,16 @@ function section(sofa) {
   sectionDOM.classList.add("items");
   sectionDOM.appendChild(productLink);
 
+  //div pour row les items
+  let gridItems = document.getElementById("gridItems");
+  gridItems.appendChild(sectionDOM);
+
   //ajout enfant section a parent body
-  let div = document.getElementById("limitedWidthDiv");
-  div.appendChild(sectionDOM);
+  let items = document.getElementById("limitedWidthDiv");
+  items.appendChild(gridItems);
 
 }
 
-
+getProducts();
 
 

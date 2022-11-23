@@ -125,10 +125,17 @@ main {
 }
 
 /*items*/
+.gridItems {
+	display: grid;
+	grid-template-columns: 33.33333333333333% 33.33333333333333% 33.33333333333333%;
+	grid-template-rows: auto;
+}
+
 .items {
 	margin-bottom: 135px;
 	display: flex;
-	justify-content: space-around;
+	align-items: center;
+	justify-content: center;
 	flex-wrap: wrap;
 }
 .items a {
@@ -146,11 +153,11 @@ main {
 	align-items: center;
 	margin-bottom: 40px;
 	padding-top: 25px;
-	width: 100%;
+	width: 300%;
 	border-radius: 10px;
 }
 .items figure img {
-	width: 160px;
+	width: 250px;
 	height: 160px;
 	object-fit: cover;
 	border-radius: 10px;
