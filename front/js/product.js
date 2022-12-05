@@ -92,6 +92,22 @@ function addProduct(product) {
 
 }
 
+//-----------------------function verifier si les couleurs et la quantite sont renseigner-------------------------------
+function checkQuantityColor(inputQuantity, colorChoice) {
+
+    if(inputQuantity <= 0) {
+        alert("Veuillez renseigner la quantité.");
+        return false;
+    }
+
+    if (colorChoice == "") {
+        alert("Veuillez renseigner la couleur.")
+        return false;
+    }
+
+    return true
+}
+
 //----------------------------function sauvegarder les produits dans notre localStorage---------------------------------
 function saveProduct() {
     let inputQuantity = document.getElementById("quantity").value;
@@ -108,15 +124,16 @@ function saveProduct() {
         console.log("erreur pas d'id");
         throw "erreur pas d'id";
     }
-
+if(checkQuantityColor(inputQuantity, colorChoice)) {
     let objectProduct = {
         product_id: idSofa,
         product_color: colorChoice,
         product_quantity: Number(inputQuantity),
     }
 
-    alert("Votre Article a bien été ajouté.");
     addProduct(objectProduct);
+    alert("Votre Article a bien été ajouté.");
+}
 
 }
 

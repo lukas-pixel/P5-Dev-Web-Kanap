@@ -173,7 +173,7 @@ let emailRegExp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+
 function valueFirstName() {
     let firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
 
-    if (regularRegExp.test(firstNameForm.value)) {
+    if (regularRegExp.test(firstNameForm.value) && firstNameForm.value.length >= 3) {
         firstNameErrorMsg.innerHTML = '';
         return true
     } else {
@@ -186,7 +186,7 @@ function valueFirstName() {
 function valueLastName() {
     let lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
 
-    if(regularRegExp.test(lastNameForm.value)) {
+    if(regularRegExp.test(lastNameForm.value) && lastNameForm.value.length >= 3) {
         lastNameErrorMsg.innerHTML = '';
         return true
     } else {
@@ -199,7 +199,7 @@ function valueLastName() {
 function valueAddress() {
     let addressErrorMsg = document.getElementById("addressErrorMsg");
 
-    if(addressRegExp.test(addressForm.value)) {
+    if(addressRegExp.test(addressForm.value) && addressForm.value.length >= 3) {
         addressErrorMsg.innerHTML = '';
         return true
     } else {
@@ -212,7 +212,7 @@ function valueAddress() {
 function valueCity() {
     let cityErrorMsg = document.getElementById("cityErrorMsg");
 
-    if (regularRegExp.test(cityForm.value)) {
+    if (regularRegExp.test(cityForm.value) && cityForm.value.length >= 3) {
         cityErrorMsg.innerHTML = '';
         return true
     } else {
